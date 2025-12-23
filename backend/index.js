@@ -4,6 +4,9 @@ import Task from './module/Task.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 app.use(express.json());
@@ -104,10 +107,9 @@ app.delete('/tasks/:id/delete', async (req, res) => {
     }
 });
 
-mongoose.connect('mongodb+srv://pedroteixeira03062005_db_user:xvcMFZY3zvkI5Rig@cluster0.qtuiqtv.mongodb.net/todo_app')
+mongoose.connect(process.env.MONGO_URI)
     .then(() => {
-        console.log('MongoDB Connected');
-        app.listen(5000, () => {
+        app.listen(process.env.PORT, () => {
             console.log('Server running on http://localhost:5000');
             console.log('Swagger UI em http://localhost:5000/api-docs');
         });
